@@ -1,0 +1,27 @@
+症状：
+
+tomcat在eclipse里面能正常启动，而在浏览器中访问http://localhost:8080/不能访问，且报404错误。同时其他项目页面也不能访问。
+
+关闭eclipse里面的tomcat，在tomcat安装目录下双击startup.bat手动启动tomcat服务器。访问htt://localhost:8080/能正常访问tomcat管理页面。
+
+症状原因：
+
+       eclipse将tomcat的项目发布目录（tomcat 目录中的webapp）重定向了,所以你会发现在tomcat安装目录下的webapp目录里面找不到你的项目文件。
+
+解决办法：
+
+重新配置下tomcat服务器：
+
+在eclipse中的server页面，双击tomcat服务，会看到配置页面：
+server locations选择的是 Use workspace metadata(does not modify Tomcat installion)
+
+如果该tomcat中部署了项目的话，这红圈中的选项会灰掉不能修改，要修改必须得先把tomcat中的部署的服务都移除。
+通过右键单击tomcat服务器选择 Add and Remove，在弹出的对话框中移除已部署的项目。移除完确定后，将看到上面的选项面板部分可编辑了。
+
+选择Use tomcat installation(Task control of Tomcat installation) 即选择tomcat的安装目录来作为项目的发布目录。
+
+然后,下来四行,看到"Deploy Path"了没?它后面的值默认是"wtpwebapps",把它改成"webapps",也就是tomcat
+
+中发布项目所在的文件夹名字。
+修改后关掉该页面，保存配置。这样就将项目部署到了tomcat安装目录下的webapp
+重启tomcat服务器，访问http://localhost:8080则能正常访问了，自己部署的项目也能正常访问了
